@@ -33,7 +33,7 @@ cat << "EOF"
    ╚═══════════════════════════════════════════════════╝
 EOF
 echo -e "${RESET}"
-echo -e "${CYAN}    ⚡ Installing CC-ACM for Claude Code CLI ⚡${RESET}"
+echo -e "${CYAN}    Installing CC-ACM for Claude Code CLI${RESET}"
 echo ""
 
 # Create scripts directory if needed
@@ -104,4 +104,4 @@ echo ""
 echo -e "${CYAN}The handoff dialog will appear when context reaches 60%.${RESET}"
 echo -e "${GRAY}To test manually: ${RESET}~/.claude/scripts/handoff-prompt.sh"
 echo ""
-echo -e "${ORANGE}⚡ Happy coding! ⚡${RESET}"
+echo -e "${ORANGE}Happy coding!${RESET}"
