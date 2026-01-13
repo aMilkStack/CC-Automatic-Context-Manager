@@ -1,2 +1,9 @@
 name: "CC-ACM Handoff"
-command: "claude"
+windows:
+  - tabs:
+      - title: "Claude Handoff"
+        color: Cyan
+        layout:
+          cwd: ""
+          commands:
+            - exec: claude

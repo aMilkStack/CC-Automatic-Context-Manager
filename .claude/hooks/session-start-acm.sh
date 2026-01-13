@@ -28,8 +28,8 @@ if grep -q "No Active Handoff" "$HANDOFF_SKILL"; then
     exit 0
 fi
 
-# Handoff exists! Tell Claude to use it
-CONTEXT="A context handoff from your previous session is available. Use the /acm:handoff skill to load the summary and continue where you left off."
+# Handoff exists! Tell Claude to immediately invoke it
+CONTEXT="IMPORTANT: A context handoff from the previous session exists. You MUST immediately invoke the /acm:handoff skill using the Skill tool BEFORE responding to anything else. This is automatic context restoration - do not ask the user, just invoke the skill now."
 
 # Return as JSON with additionalContext
 python3 -c "import json; print(json.dumps({

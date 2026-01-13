@@ -19,94 +19,126 @@ SNOOZE_DURATION="${SNOOZE_DURATION:-300}"
 SUMMARY_TOKENS="${SUMMARY_TOKENS:-500}"
 DIALOG_STYLE="${DIALOG_STYLE:-vibrant}"
 
-# Show styled dialog matching Claude aesthetic with vibrant cyberpunk vibes
+# Show retro ASCII styled dialog matching CC-ACM statusline aesthetic
 RESULT=$(powershell.exe -Command "
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
-# Colors based on dialog style (vibrant or minimal)
-\$bgColor = [System.Drawing.Color]::FromArgb(24, 24, 27)
-if ('$DIALOG_STYLE' -eq 'minimal') {
-    \$fgColor = [System.Drawing.Color]::FromArgb(210, 210, 215)
-    \$mutedColor = [System.Drawing.Color]::FromArgb(140, 140, 150)
-    \$accentColor = [System.Drawing.Color]::FromArgb(217, 119, 87)
-} else {
-    # Vibrant colors matching the CC-ACM header aesthetic
-    \$fgColor = [System.Drawing.Color]::FromArgb(230, 230, 235)
-    \$mutedColor = [System.Drawing.Color]::FromArgb(160, 160, 170)
-    \$accentColor = [System.Drawing.Color]::FromArgb(255, 140, 80)
-}
-\$pinkAccent = [System.Drawing.Color]::FromArgb(255, 120, 200)
-\$btnBg = [System.Drawing.Color]::FromArgb(39, 39, 42)
+# Retro palette (matching CC-ACM pixel art header)
+\$darkBg = [System.Drawing.Color]::FromArgb(46, 44, 59)        # #2e2c3b
+\$darkGray = [System.Drawing.Color]::FromArgb(62, 65, 95)      # #3e415f
+\$medGray = [System.Drawing.Color]::FromArgb(85, 96, 125)      # #55607d
+\$mint = [System.Drawing.Color]::FromArgb(65, 222, 149)        # #41de95
+\$teal = [System.Drawing.Color]::FromArgb(42, 164, 170)        # #2aa4aa
+\$orange = [System.Drawing.Color]::FromArgb(196, 101, 28)      # #c4651c
+\$rust = [System.Drawing.Color]::FromArgb(181, 65, 49)         # #b54131
+\$pink = [System.Drawing.Color]::FromArgb(234, 97, 157)        # #ea619d
+\$ice = [System.Drawing.Color]::FromArgb(193, 229, 234)        # #c1e5ea
 
 \$form = New-Object System.Windows.Forms.Form
-\$form.Text = 'Claude'
-\$form.Size = New-Object System.Drawing.Size(420, 180)
+\$form.Text = 'CC-ACM'
+\$form.Size = New-Object System.Drawing.Size(460, 200)
 \$form.StartPosition = 'CenterScreen'
-\$form.FormBorderStyle = 'FixedDialog'
-\$form.MaximizeBox = \$false
-\$form.MinimizeBox = \$false
-\$form.BackColor = \$bgColor
-\$form.ForeColor = \$fgColor
+\$form.FormBorderStyle = 'None'
+\$form.BackColor = \$darkBg
+\$form.ForeColor = \$ice
 \$form.TopMost = \$true
 
-# Header
+# Custom border panel
+\$borderPanel = New-Object System.Windows.Forms.Panel
+\$borderPanel.Location = New-Object System.Drawing.Point(0, 0)
+\$borderPanel.Size = \$form.Size
+\$borderPanel.BackColor = \$darkBg
+\$form.Controls.Add(\$borderPanel)
+
+# ASCII top border ░▒▓
+\$topBorder = New-Object System.Windows.Forms.Label
+\$topBorder.Location = New-Object System.Drawing.Point(0, 0)
+\$topBorder.Size = New-Object System.Drawing.Size(460, 25)
+\$topBorder.Text = '░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░'
+\$topBorder.Font = New-Object System.Drawing.Font('Consolas', 10)
+\$topBorder.ForeColor = \$orange
+\$topBorder.TextAlign = 'MiddleCenter'
+\$borderPanel.Controls.Add(\$topBorder)
+
+# Header with pink accent
 \$header = New-Object System.Windows.Forms.Label
-\$header.Location = New-Object System.Drawing.Point(15, 15)
+\$header.Location = New-Object System.Drawing.Point(20, 32)
 \$header.AutoSize = \$true
-\$header.Text = 'CONTEXT ALERT ($THRESHOLD%)'
-\$header.Font = New-Object System.Drawing.Font('Segoe UI Semibold', 12)
-\$header.ForeColor = \$accentColor
-\$form.Controls.Add(\$header)
+\$header.Text = '▓ CONTEXT ALERT ▓ $THRESHOLD% ▓'
+\$header.Font = New-Object System.Drawing.Font('Consolas', 14, [System.Drawing.FontStyle]::Bold)
+\$header.ForeColor = \$pink
+\$borderPanel.Controls.Add(\$header)
 
-# Message
+# Message with teal
 \$label = New-Object System.Windows.Forms.Label
-\$label.Location = New-Object System.Drawing.Point(15, 45)
-\$label.AutoSize = \$true
-\$label.Text = 'Session context usage has reached $THRESHOLD%. Generate summary and open a fresh session?'
-\$label.Font = New-Object System.Drawing.Font('Segoe UI', 10)
-\$label.ForeColor = \$mutedColor
-\$form.Controls.Add(\$label)
+\$label.Location = New-Object System.Drawing.Point(20, 65)
+\$label.Size = New-Object System.Drawing.Size(420, 40)
+\$label.Text = 'Session running hot. Generate handoff summary and open fresh session?'
+\$label.Font = New-Object System.Drawing.Font('Consolas', 10)
+\$label.ForeColor = \$teal
+\$borderPanel.Controls.Add(\$label)
 
-# Buttons
+# Buttons with retro styling
 \$yesBtn = New-Object System.Windows.Forms.Button
-\$yesBtn.Location = New-Object System.Drawing.Point(15, 90)
-\$yesBtn.Size = New-Object System.Drawing.Size(120, 35)
-\$yesBtn.Text = 'YES'
+\$yesBtn.Location = New-Object System.Drawing.Point(20, 115)
+\$yesBtn.Size = New-Object System.Drawing.Size(130, 40)
+\$yesBtn.Text = '▓ YES ▓'
 \$yesBtn.FlatStyle = 'Flat'
-\$yesBtn.Font = New-Object System.Drawing.Font('Segoe UI', 9, [System.Drawing.FontStyle]::Bold)
-\$yesBtn.BackColor = \$accentColor
-\$yesBtn.ForeColor = \$bgColor
+\$yesBtn.Font = New-Object System.Drawing.Font('Consolas', 11, [System.Drawing.FontStyle]::Bold)
+\$yesBtn.BackColor = \$darkGray
+\$yesBtn.ForeColor = \$mint
+\$yesBtn.FlatAppearance.BorderColor = \$mint
+\$yesBtn.FlatAppearance.BorderSize = 2
 \$yesBtn.Cursor = [System.Windows.Forms.Cursors]::Hand
 \$yesBtn.Add_Click({ \$form.Tag = 'Yes'; \$form.Close() })
-\$form.Controls.Add(\$yesBtn)
+\$borderPanel.Controls.Add(\$yesBtn)
 \$form.AcceptButton = \$yesBtn
 
 \$remindBtn = New-Object System.Windows.Forms.Button
-\$remindBtn.Location = New-Object System.Drawing.Point(145, 90)
-\$remindBtn.Size = New-Object System.Drawing.Size(120, 35)
-\$remindBtn.Text = 'IN 5 MIN'
+\$remindBtn.Location = New-Object System.Drawing.Point(165, 115)
+\$remindBtn.Size = New-Object System.Drawing.Size(130, 40)
+\$remindBtn.Text = '▓ SNOOZE ▓'
 \$remindBtn.FlatStyle = 'Flat'
-\$remindBtn.Font = New-Object System.Drawing.Font('Segoe UI', 9)
-\$remindBtn.BackColor = \$btnBg
-\$remindBtn.ForeColor = \$fgColor
+\$remindBtn.Font = New-Object System.Drawing.Font('Consolas', 11)
+\$remindBtn.BackColor = \$darkGray
+\$remindBtn.ForeColor = \$teal
+\$remindBtn.FlatAppearance.BorderColor = \$teal
+\$remindBtn.FlatAppearance.BorderSize = 2
 \$remindBtn.Cursor = [System.Windows.Forms.Cursors]::Hand
 \$remindBtn.Add_Click({ \$form.Tag = 'Remind'; \$form.Close() })
-\$form.Controls.Add(\$remindBtn)
+\$borderPanel.Controls.Add(\$remindBtn)
 
 \$noBtn = New-Object System.Windows.Forms.Button
-\$noBtn.Location = New-Object System.Drawing.Point(275, 90)
-\$noBtn.Size = New-Object System.Drawing.Size(120, 35)
-\$noBtn.Text = 'DISMISS'
+\$noBtn.Location = New-Object System.Drawing.Point(310, 115)
+\$noBtn.Size = New-Object System.Drawing.Size(130, 40)
+\$noBtn.Text = '▓ DISMISS ▓'
 \$noBtn.FlatStyle = 'Flat'
-\$noBtn.Font = New-Object System.Drawing.Font('Segoe UI', 9)
-\$noBtn.BackColor = \$btnBg
-\$noBtn.ForeColor = \$mutedColor
+\$noBtn.Font = New-Object System.Drawing.Font('Consolas', 11)
+\$noBtn.BackColor = \$darkGray
+\$noBtn.ForeColor = \$rust
+\$noBtn.FlatAppearance.BorderColor = \$rust
+\$noBtn.FlatAppearance.BorderSize = 2
 \$noBtn.Cursor = [System.Windows.Forms.Cursors]::Hand
 \$noBtn.Add_Click({ \$form.Tag = 'No'; \$form.Close() })
-\$form.Controls.Add(\$noBtn)
+\$borderPanel.Controls.Add(\$noBtn)
 \$form.CancelButton = \$noBtn
+
+# ASCII bottom border
+\$bottomBorder = New-Object System.Windows.Forms.Label
+\$bottomBorder.Location = New-Object System.Drawing.Point(0, 170)
+\$bottomBorder.Size = New-Object System.Drawing.Size(460, 25)
+\$bottomBorder.Text = '░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░'
+\$bottomBorder.Font = New-Object System.Drawing.Font('Consolas', 10)
+\$bottomBorder.ForeColor = \$orange
+\$bottomBorder.TextAlign = 'MiddleCenter'
+\$borderPanel.Controls.Add(\$bottomBorder)
+
+# Allow dragging borderless window
+\$form.Add_MouseDown({ \$script:dragging = \$true; \$script:dragStart = [System.Windows.Forms.Cursor]::Position })
+\$form.Add_MouseMove({ if (\$script:dragging) { \$p = [System.Windows.Forms.Cursor]::Position; \$form.Location = New-Object System.Drawing.Point((\$form.Location.X + \$p.X - \$script:dragStart.X), (\$form.Location.Y + \$p.Y - \$script:dragStart.Y)); \$script:dragStart = \$p } })
+\$form.Add_MouseUp({ \$script:dragging = \$false })
 
 \$form.Add_Shown({\$form.Activate()})
 [void]\$form.ShowDialog()
@@ -165,7 +197,7 @@ Add-Type -AssemblyName System.Drawing
 \$progressForm.FormBorderStyle = 'FixedDialog'
 \$progressForm.MaximizeBox = \$false
 \$progressForm.MinimizeBox = \$false
-\$progressForm.BackColor = [System.Drawing.Color]::FromArgb(24, 24, 27)
+\$progressForm.BackColor = [System.Drawing.Color]::FromArgb(46, 44, 59)  # #2e2c3b
 \$progressForm.TopMost = \$true
 
 \$label = New-Object System.Windows.Forms.Label
@@ -173,7 +205,7 @@ Add-Type -AssemblyName System.Drawing
 \$label.Size = New-Object System.Drawing.Size(360, 60)
 \$label.Text = 'Generating handoff summary...`n`nThis might take a few seconds'
 \$label.Font = New-Object System.Drawing.Font('Segoe UI', 10)
-\$label.ForeColor = [System.Drawing.Color]::FromArgb(255, 140, 80)
+\$label.ForeColor = [System.Drawing.Color]::FromArgb(196, 101, 28)  # #c4651c orange
 \$label.TextAlign = 'MiddleCenter'
 \$progressForm.Controls.Add(\$label)
 
@@ -304,9 +336,33 @@ $HANDOFF
 *To configure CC-ACM settings, use: /acm:config*
 EOF
 
-# Open new Warp tab with claude command using Warp launch configuration
+# Open new Warp tab and launch Claude using SendKeys
 # SessionStart hook will automatically detect and invoke the handoff
-if ! powershell.exe -Command "Start-Process 'warp://launch/cc-acm-handoff'" 2>/dev/null; then
+powershell.exe -Command "
+Add-Type -AssemblyName Microsoft.VisualBasic
+Add-Type -AssemblyName System.Windows.Forms
+
+# Check if Warp is already running (get one with a window)
+\$warp = Get-Process -Name 'warp' -ErrorAction SilentlyContinue | Where-Object { \$_.MainWindowTitle -ne '' } | Select-Object -First 1
+
+if (\$warp) {
+    # Warp running - focus it and open new tab
+    [Microsoft.VisualBasic.Interaction]::AppActivate(\$warp.Id)
+    Start-Sleep -Milliseconds 300
+    [System.Windows.Forms.SendKeys]::SendWait('^+t')  # Ctrl+Shift+T for new tab
+    Start-Sleep -Milliseconds 800  # Wait for new tab to be ready
+} else {
+    # Warp not running - start it
+    \$warp = Start-Process 'C:\Users\User\AppData\Local\Programs\Warp\warp.exe' -PassThru
+    Start-Sleep -Seconds 3
+    [Microsoft.VisualBasic.Interaction]::AppActivate(\$warp.Id)
+}
+
+Start-Sleep -Milliseconds 500
+Set-Clipboard -Value 'claude'
+[System.Windows.Forms.SendKeys]::SendWait('^v')  # Ctrl+V paste
+[System.Windows.Forms.SendKeys]::SendWait('{ENTER}')
+" 2>/dev/null || {
     echo "CC-ACM: Handoff saved to ~/.claude/skills/acm-handoff/SKILL.md" >&2
     echo "CC-ACM: Start a new Claude session and use /acm:handoff to continue" >&2
-fi
+}
