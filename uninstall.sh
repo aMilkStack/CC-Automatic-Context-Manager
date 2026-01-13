@@ -40,6 +40,7 @@ echo ""
 echo -e "${PINK}This will remove:${RESET}"
 echo -e "${GRAY}  • Handoff script from ~/.claude/scripts/${RESET}"
 echo -e "${GRAY}  • SessionStart hook and handoff skill${RESET}"
+echo -e "${GRAY}  • Warp launch configuration${RESET}"
 echo -e "${GRAY}  • Statusline patches${RESET}"
 echo -e "${GRAY}  • Configuration file${RESET}"
 echo -e "${GRAY}  • Temporary flag files${RESET}"
@@ -79,6 +80,15 @@ if [ -d "$CLAUDE_DIR/skills/acm-handoff" ]; then
     echo -e "${GREEN}✓${RESET} Skill removed"
 else
     echo -e "${GRAY}→${RESET} Skill not found"
+fi
+
+# Remove Warp launch configuration
+if [ -f "$HOME/.warp/launch_configurations/cc-acm-handoff.yaml" ]; then
+    echo -e "${GRAY}→${RESET} Removing Warp launch configuration"
+    rm -f "$HOME/.warp/launch_configurations/cc-acm-handoff.yaml"
+    echo -e "${GREEN}✓${RESET} Warp config removed"
+else
+    echo -e "${GRAY}→${RESET} Warp config not found"
 fi
 
 # Note about hooks.json

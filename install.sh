@@ -67,6 +67,13 @@ chmod +x "$HOOKS_DIR/session-start-acm.sh"
 # Install handoff skill
 cp "$SCRIPT_DIR/skills/acm-handoff/SKILL.md" "$SKILLS_DIR/acm-handoff/"
 
+# Install Warp launch configuration
+WARP_DIR="$HOME/.warp/launch_configurations"
+mkdir -p "$WARP_DIR"
+echo -e "${GRAY}→${RESET} Installing Warp launch configuration"
+cp "$SCRIPT_DIR/.warp/launch_configurations/cc-acm-handoff.yaml" "$WARP_DIR/"
+echo -e "${GREEN}✓${RESET} Warp config installed"
+
 # Register hook in hooks.json
 HOOKS_JSON="$CLAUDE_DIR/hooks.json"
 if [ -f "$HOOKS_JSON" ]; then

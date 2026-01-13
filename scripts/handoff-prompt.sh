@@ -170,11 +170,15 @@ Add-Type -AssemblyName System.Drawing
 " 2>/dev/null &
 PROGRESS_PID=$!
 
-# Extract conversation from JSONL
+# Gather context for handoff
+# 1. Extract recent conversation (smarter truncation)
 CONVERSATION=$(cat "$TRANSCRIPT_PATH" | grep -E '"type":"(user|assistant)"' | \
     python3 -c "
 import sys, json
 msgs = []
+total_chars = 0
+MAX_CHARS = 15000  # ~3-4k tokens worth of context
+
 for line in sys.stdin:
     try:
         d = json.loads(line)
@@ -183,14 +187,63 @@ for line in sys.stdin:
         if isinstance(content, list):
             content = ' '.join([c.get('text', '') for c in content if isinstance(c, dict)])
         if role in ('user', 'assistant') and content:
-            msgs.append(f'{role.upper()}: {content[:500]}')
+            msgs.append((role, content))
     except (json.JSONDecodeError, KeyError, TypeError, ValueError):
         pass
-print('\n'.join(msgs[-20:]))
+
+# Take recent messages up to MAX_CHARS
+recent = []
+for role, content in reversed(msgs):
+    if total_chars + len(content) > MAX_CHARS:
+        break
+    recent.insert(0, f'{role.upper()}: {content}')
+    total_chars += len(content)
+
+print('\n\n'.join(recent))
 " 2>/dev/null)
 
-# Generate handoff via claude -p
-HANDOFF=$(echo "$CONVERSATION" | claude -p "Generate a concise handoff summary (under $SUMMARY_TOKENS tokens) for continuing this conversation. Include: current task, progress made, next steps, key decisions. Format as markdown." 2>/dev/null)
+# 2. Get git context if available
+GIT_CONTEXT=""
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    GIT_BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
+    GIT_STATUS=$(git status --short 2>/dev/null | head -20)
+    GIT_RECENT=$(git log --oneline -5 2>/dev/null)
+
+    if [ -n "$GIT_STATUS" ] || [ -n "$GIT_RECENT" ]; then
+        GIT_CONTEXT="
+
+GIT CONTEXT:
+Branch: $GIT_BRANCH
+
+Modified files:
+$GIT_STATUS
+
+Recent commits:
+$GIT_RECENT
+"
+    fi
+fi
+
+# 3. Generate handoff with improved prompt
+HANDOFF=$(cat << EOF | claude -p 2>/dev/null
+You are generating a handoff summary for a developer who reached their context limit and needs to continue in a fresh session.
+
+Analyze the conversation below and create a strategic handoff summary (under $SUMMARY_TOKENS tokens) that includes:
+
+1. **Current Objective** - What is the main goal/task being worked on?
+2. **Progress So Far** - What has been accomplished? What works?
+3. **Active Work** - What was being done right before the handoff?
+4. **Key Decisions** - Important architectural or implementation decisions made
+5. **Next Steps** - Concrete actions to take when resuming
+6. **Context to Remember** - Patterns, conventions, or constraints established
+
+Format as clear, scannable markdown. Be specific and actionable.
+
+CONVERSATION:
+$CONVERSATION
+$GIT_CONTEXT
+EOF
+)
 
 # Close progress dialog
 kill $PROGRESS_PID 2>/dev/null || true
@@ -232,18 +285,6 @@ $HANDOFF
 *To configure CC-ACM settings, use: /acm:config*
 EOF
 
-# Open new Warp tab with claude command using Warp URL scheme
+# Open new Warp tab with claude command using Warp launch configuration
 # SessionStart hook will automatically detect and invoke the handoff
-powershell.exe -Command "Start-Process 'warp://action/new_tab'" 2>/dev/null &
-
-# Give Warp a moment to open the tab
-sleep 0.5
-
-# Type claude command in the new tab
-powershell.exe -Command "
-Add-Type -AssemblyName System.Windows.Forms
-Start-Sleep -Milliseconds 300
-[System.Windows.Forms.SendKeys]::SendWait('claude')
-Start-Sleep -Milliseconds 100
-[System.Windows.Forms.SendKeys]::SendWait('{ENTER}')
-" 2>/dev/null &
+powershell.exe -Command "Start-Process 'warp://launch/cc-acm-handoff'" 2>/dev/null &
