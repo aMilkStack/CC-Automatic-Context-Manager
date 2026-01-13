@@ -8,10 +8,12 @@ Automatic context handoff for Claude Code. When your session hits 60% context us
 
 ## Features
 
-- **Auto-trigger at 60%** - Statusline monitors context usage
-- **Yes / In 5 min / Dismiss** - Snooze support for when you're mid-task
+- **Auto-trigger at 60%** - Statusline monitors context usage (configurable)
+- **Yes / In 5 min / Dismiss** - Snooze support for when you're mid-task (duration configurable)
 - **Seamless handoff** - Summary generated via `claude -p`, new tab opens with `--append-system-prompt`
-- **Dark themed UI** - Matches Claude/terminal aesthetic
+- **Dark themed UI** - Vibrant cyberpunk or minimal styles
+- **Interactive config** - Use `/acm:config` to customize settings through Claude
+- **Clean uninstaller** - Easy removal with `./uninstall.sh`
 
 ## How It Works
 
@@ -53,10 +55,40 @@ scripts/
 
 ## Configuration
 
-Edit `handoff-prompt.sh` to customise:
-- **Threshold** - Change from 60% (in statusline)
-- **Snooze duration** - Default 5 minutes (300 seconds)
-- **Summary length** - Default 500 tokens
+### Interactive Configuration (Recommended)
+
+Use the `/acm:config` skill in Claude Code for an interactive setup:
+
+```bash
+# In any Claude Code session
+/acm:config
+```
+
+Claude will guide you through customizing:
+- **Trigger threshold** (50-90%, default: 60%)
+- **Snooze duration** (1-60 minutes, default: 5)
+- **Summary token length** (200-2000, default: 500)
+- **Dialog style** (vibrant or minimal)
+
+Settings are saved to `~/.claude/cc-acm.conf` and apply immediately to new sessions.
+
+### Manual Configuration
+
+Alternatively, create/edit `~/.claude/cc-acm.conf`:
+
+```bash
+# CC-ACM Configuration
+THRESHOLD=60
+SNOOZE_DURATION=300
+SUMMARY_TOKENS=500
+DIALOG_STYLE=vibrant
+```
+
+### Viewing Current Config
+
+```bash
+cat ~/.claude/cc-acm.conf
+```
 
 ## Requirements (WSL/Warp - Default)
 
@@ -78,6 +110,19 @@ Edit `handoff-prompt.sh` to customise:
 | [Generic](platforms/generic/) | Text prompt | Manual | In Development |
 
 To try a platform variant, copy the `handoff-prompt.sh` from the relevant `platforms/` folder instead of the default one. Contributions and testing feedback welcome!
+
+## Uninstall
+
+To completely remove CC-ACM:
+
+```bash
+./uninstall.sh
+```
+
+This will:
+- Remove the handoff script
+- Restore your original statusline
+- Delete configuration and temp files
 
 ## License
 
