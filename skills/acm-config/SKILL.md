@@ -39,7 +39,7 @@ Ask the user about each setting in a friendly, conversational way:
 - Question: "How long should the snooze duration be (in minutes)?"
 - Default: 5
 - Valid range: 1-60
-- Explain: "When you click 'Give me 5', how long should CC-ACM wait before asking again?"
+- Explain: "When you click 'IN 5 MIN', how long should CC-ACM wait before asking again?"
 
 **Summary Token Length:**
 - Question: "How detailed should handoff summaries be (in tokens)?"

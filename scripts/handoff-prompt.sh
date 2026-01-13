@@ -124,7 +124,7 @@ case "$RESULT" in
         # Continue with handoff
         ;;
     "Remind")
-        # Set snooze for 5 minutes, remove the permanent flag
+        # Set snooze for configured duration, remove the permanent flag
         rm -f "$FLAG_FILE"
         echo $(($(date +%s) + SNOOZE_DURATION)) > "$SNOOZE_FILE"
         exit 0
