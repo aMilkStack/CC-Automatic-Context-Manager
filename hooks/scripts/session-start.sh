@@ -13,13 +13,16 @@ if [ "$SOURCE" != "startup" ]; then
     exit 0
 fi
 
-# External state location (outside plugin)
-HANDOFF_STATE="$HOME/.claude/claudikins-acm/handoff.md"
+# Project-local state location (per-project handoff)
+# Check current project's .claude directory for handoff
+PROJECT_HANDOFF=".claude/claudikins-acm/handoff.md"
 
-if [ ! -f "$HANDOFF_STATE" ]; then
-    # No handoff available
+if [ ! -f "$PROJECT_HANDOFF" ]; then
+    # No handoff for this project
     exit 0
 fi
+
+HANDOFF_STATE="$PROJECT_HANDOFF"
 
 # Check if file has actual content (not empty or placeholder)
 if [ ! -s "$HANDOFF_STATE" ]; then

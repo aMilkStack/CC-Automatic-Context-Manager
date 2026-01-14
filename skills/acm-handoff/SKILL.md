@@ -11,18 +11,18 @@ This skill loads handoff content from a previous session that reached the contex
 
 When this skill is invoked:
 
-1. **Read the handoff file** at `~/.claude/claudikins-acm/handoff.md`
+1. **Read the handoff file** at `.claude/claudikins-acm/handoff.md` (project-local)
 2. **Present the summary** to understand what was being worked on
 3. **Continue the work** from where it was left off
 
 ## Handoff Location
 
-The handoff content is stored externally at:
+The handoff content is stored per-project at:
 ```
-~/.claude/claudikins-acm/handoff.md
+.claude/claudikins-acm/handoff.md
 ```
 
-Read this file to get the previous session's context.
+This is relative to the project root. Read this file to get the previous session's context.
 
 ## If No Handoff Exists
 

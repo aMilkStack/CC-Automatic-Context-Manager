@@ -305,8 +305,9 @@ if [ -z "$HANDOFF" ]; then
 fi
 rm -f "$CLAUDE_STDERR"
 
-# Save handoff to external state file (outside plugin)
-HANDOFF_STATE="$HOME/.claude/claudikins-acm/handoff.md"
+# Save handoff to project-local state file
+# This ensures handoff only loads in the same project
+HANDOFF_STATE=".claude/claudikins-acm/handoff.md"
 mkdir -p "$(dirname "$HANDOFF_STATE")"
 
 cat > "$HANDOFF_STATE" << EOF
@@ -358,6 +359,6 @@ Set-Clipboard -Value 'claude'
 [System.Windows.Forms.SendKeys]::SendWait('^v')  # Ctrl+V paste
 [System.Windows.Forms.SendKeys]::SendWait('{ENTER}')
 " 2>/dev/null || {
-    echo "Claudikins Automatic Context Manager: Handoff saved to ~/.claude/claudikins-acm/handoff.md" >&2
-    echo "Claudikins Automatic Context Manager: Start a new Claude session and use /acm:handoff to continue" >&2
+    echo "Claudikins Automatic Context Manager: Handoff saved to .claude/claudikins-acm/handoff.md" >&2
+    echo "Claudikins Automatic Context Manager: Start a new Claude session in this project to continue" >&2
 }
