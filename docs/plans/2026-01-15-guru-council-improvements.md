@@ -467,9 +467,9 @@ Add agents reference to `.claude-plugin/plugin.json`:
   "description": "Claudikins Automatic Context Manager - seamless context handoff for Claude Code",
   "author": {
     "name": "Ethan Lee",
-    "url": "https://github.com/aMilkStack"
+    "url": "https://github.com/elb-pr"
   },
-  "repository": "https://github.com/aMilkStack/claudikins-automatic-context-manager",
+  "repository": "https://github.com/elb-pr/claudikins-automatic-context-manager",
   "hooks": "./hooks/hooks.json",
   "agents": "./agents/"
 }

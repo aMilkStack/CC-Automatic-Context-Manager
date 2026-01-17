@@ -24,14 +24,14 @@ LLM attention weights distribute across all context tokens. As context fills, pe
 
 ### Claude Code
 
-1. `/plugin marketplace add aMilkStack/claudikins-marketplace`
+1. `/plugin marketplace add elb-pr/claudikins-marketplace`
 2. `/plugin` → navigate to Claudikins Marketplace → install
 
 <details>
 <summary>Manual</summary>
 
 ```bash
-git clone https://github.com/aMilkStack/claudikins-automatic-context-manager.git
+git clone https://github.com/elb-pr/claudikins-automatic-context-manager.git
 ./install.sh
 ```
 
