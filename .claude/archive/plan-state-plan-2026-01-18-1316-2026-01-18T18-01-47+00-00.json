@@ -1,0 +1,16 @@
+{
+  "session_id": "plan-2026-01-18-1316",
+  "started_at": "2026-01-18T13:16:03+00:00",
+  "project_hash": "9b97f21c4581b9c9322903a1a0464ca43a3f09af118c9bf91763e507459c8c98",
+  "phase": "complete",
+  "research_complete": false,
+  "human_decisions": [],
+  "abandoned": false,
+  "task": "Switch from hookify to native hooks for context handoff triggering",
+  "review_complete": true,
+  "reviewed_by": "Klaus",
+  "status": "interrupted",
+  "interrupted_at": "2026-01-18T18:01:47+00:00",
+  "interrupted_by": "manual",
+  "resume_instructions": "Session interrupted during complete phase. Use claudikins-kernel:outline --session-id plan-2026-01-18-1316 to resume."
+}

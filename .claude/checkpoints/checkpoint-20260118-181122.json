@@ -1,0 +1,1017 @@
+{
+  "checkpoint_id": "checkpoint-20260118-181122",
+  "session_id": "exec-2026-01-18-1350",
+  "timestamp": "2026-01-18T18:11:22+00:00",
+  "stop_reason": "unknown",
+  "execution_state": {
+    "current_batch": 2,
+    "current_task": 2,
+    "total_tasks": 11,
+    "completed_tasks": 0,
+    "in_progress_tasks": 1
+  },
+  "recovery_instructions": "Run claudikins-kernel:execute --resume to continue from this checkpoint",
+  "state_snapshot": {
+    "session_id": "exec-2026-01-18-1350",
+    "plan_source": ".claude/plans/plan-2026-01-18-1316.md",
+    "started_at": "2026-01-18T13:50:00+00:00",
+    "status": "executing",
+    "current_batch": 2,
+    "current_task": "2",
+    "tasks": [
+      {
+        "id": "1",
+        "name": "Create UserPromptSubmit hook script",
+        "files": [
+          "hooks/scripts/user-prompt-submit.sh"
+        ],
+        "deps": [],
+        "batch": 1,
+        "status": "complete",
+        "tool_calls": 34,
+        "last_tool": "Task",
+        "last_activity": 1768757479.164398,
+        "stuck_score": 50
+      },
+      {
+        "id": "2",
+        "name": "Update hooks.json to register new hook",
+        "files": [
+          "hooks/hooks.json"
+        ],
+        "deps": [
+          "1"
+        ],
+        "batch": 1,
+        "status": "in_progress",
+        "tool_calls": 101,
+        "last_tool": "Bash",
+        "last_activity": 1768759844.152405,
+        "stuck_score": 90
+      },
+      {
+        "id": "3",
+        "name": "Simplify statusline to create flag file only",
+        "files": [
+          "scripts/statusline-command.sh"
+        ],
+        "deps": [],
+        "batch": 1,
+        "status": "pending"
+      },
+      {
+        "id": "4",
+        "name": "Create structured state capture script",
+        "files": [
+          "scripts/capture-state.sh"
+        ],
+        "deps": [],
+        "batch": 1,
+        "status": "pending"
+      },
+      {
+        "id": "5",
+        "name": "Rewrite run-handoff.sh to use structured state",
+        "files": [
+          "scripts/run-handoff.sh"
+        ],
+        "deps": [
+          "4"
+        ],
+        "batch": 2,
+        "status": "pending"
+      },
+      {
+        "id": "6",
+        "name": "Update SessionStart hook for structured state",
+        "files": [
+          "hooks/scripts/session-start.sh"
+        ],
+        "deps": [
+          "4"
+        ],
+        "batch": 2,
+        "status": "pending"
+      },
+      {
+        "id": "7",
+        "name": "Update acm-handoff skill for structured state",
+        "files": [
+          "skills/acm-handoff/SKILL.md"
+        ],
+        "deps": [
+          "4"
+        ],
+        "batch": 2,
+        "status": "pending"
+      },
+      {
+        "id": "8",
+        "name": "Delete hookify injection script",
+        "files": [
+          "scripts/inject-handoff-hook.sh"
+        ],
+        "deps": [
+          "2",
+          "3"
+        ],
+        "batch": 3,
+        "status": "pending"
+      },
+      {
+        "id": "9",
+        "name": "Delete hookify template",
+        "files": [
+          "scripts/handoff-request-template.md"
+        ],
+        "deps": [
+          "2",
+          "3"
+        ],
+        "batch": 3,
+        "status": "pending"
+      },
+      {
+        "id": "10",
+        "name": "Clean up any existing hookify files",
+        "files": [
+          ".claude/hookify.*.local.md"
+        ],
+        "deps": [
+          "8",
+          "9"
+        ],
+        "batch": 3,
+        "status": "pending"
+      },
+      {
+        "id": "11",
+        "name": "Test end-to-end handoff flow",
+        "files": [],
+        "deps": [
+          "5",
+          "6",
+          "7",
+          "10"
+        ],
+        "batch": 4,
+        "status": "pending"
+      }
+    ],
+    "batches": [
+      {
+        "id": 1,
+        "tasks": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "status": "complete"
+      },
+      {
+        "id": 2,
+        "tasks": [
+          "5",
+          "6",
+          "7"
+        ],
+        "status": "pending"
+      },
+      {
+        "id": 3,
+        "tasks": [
+          "8",
+          "9",
+          "10"
+        ],
+        "status": "pending"
+      },
+      {
+        "id": 4,
+        "tasks": [
+          "11"
+        ],
+        "status": "pending"
+      }
+    ],
+    "last_checkpoint": "checkpoint-20260118-181052",
+    "last_checkpoint_file": "/home/ethanlee/projects/claudikins-automatic-context-manager/.claude/checkpoints/checkpoint-20260118-181052.json",
+    "last_checkpoint_at": "2026-01-18T18:10:52+00:00"
+  },
+  "trace_snapshot": {
+    "spans": [],
+    "tool_calls": [
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:03:05+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:03:22+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "TodoWrite",
+        "timestamp": "2026-01-18T16:03:29+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:04:07+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:04:07+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Read",
+        "timestamp": "2026-01-18T16:04:12+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:04:13+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Read",
+        "timestamp": "2026-01-18T16:04:16+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Write",
+        "timestamp": "2026-01-18T16:04:38+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:06:28+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:09:24+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:21:19+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:25:58+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:26:01+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:32:16+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:34:50+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:35:50+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:36:23+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:36:27+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:36:32+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:36:36+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:36:40+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:36:44+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:36:48+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:56:24+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T16:56:29+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:03:29+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:04:21+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:04:26+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:04:49+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:15:31+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:15:32+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:31:06+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "1",
+        "tool": "Task",
+        "timestamp": "2026-01-18T17:31:19+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:34:26+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:36:32+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:36:38+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:36:55+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Edit",
+        "timestamp": "2026-01-18T17:37:04+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:37:10+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:37:15+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:37:15+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:37:58+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:38:03+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Task",
+        "timestamp": "2026-01-18T17:38:10+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TodoWrite",
+        "timestamp": "2026-01-18T17:38:21+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:40:29+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:40:38+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Task",
+        "timestamp": "2026-01-18T17:40:52+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:40:57+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:41:02+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Edit",
+        "timestamp": "2026-01-18T17:41:04+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:41:13+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:41:22+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:41:22+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:41:29+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Task",
+        "timestamp": "2026-01-18T17:41:33+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:41:40+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:41:44+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:41:51+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Write",
+        "timestamp": "2026-01-18T17:42:05+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:42:09+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:42:14+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:42:23+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TaskOutput",
+        "timestamp": "2026-01-18T17:42:32+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:43:36+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TaskOutput",
+        "timestamp": "2026-01-18T17:43:41+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:44:34+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:44:41+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:47:35+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:48:32+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:49:33+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:50:47+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TodoWrite",
+        "timestamp": "2026-01-18T17:51:11+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:51:36+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:51:45+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:51:51+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:51:57+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:52:03+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:52:09+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:52:17+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:52:43+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:52:52+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:52:58+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:53:05+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:53:11+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:53:18+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "AskUserQuestion",
+        "timestamp": "2026-01-18T17:53:20+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:53:32+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:53:45+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:56:54+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TodoWrite",
+        "timestamp": "2026-01-18T17:57:05+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "AskUserQuestion",
+        "timestamp": "2026-01-18T17:57:27+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:57:43+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:57:52+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Task",
+        "timestamp": "2026-01-18T17:58:42+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:58:47+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:58:48+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Write",
+        "timestamp": "2026-01-18T17:59:03+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Edit",
+        "timestamp": "2026-01-18T17:59:04+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:59:11+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Edit",
+        "timestamp": "2026-01-18T17:59:11+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:59:14+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Grep",
+        "timestamp": "2026-01-18T17:59:20+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:59:25+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:59:33+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Glob",
+        "timestamp": "2026-01-18T17:59:35+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T17:59:40+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T17:59:48+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TaskOutput",
+        "timestamp": "2026-01-18T17:59:50+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TaskOutput",
+        "timestamp": "2026-01-18T17:59:53+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Edit",
+        "timestamp": "2026-01-18T17:59:56+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:00:01+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:00:09+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:00:18+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:00:23+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:00:28+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TaskOutput",
+        "timestamp": "2026-01-18T18:00:39+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:07:53+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T18:07:53+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:09:02+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TodoWrite",
+        "timestamp": "2026-01-18T18:09:12+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:09:12+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:09:16+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:09:22+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:09:32+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:09:36+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TodoWrite",
+        "timestamp": "2026-01-18T18:09:46+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:09:47+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:10:08+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:10:14+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:10:21+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Read",
+        "timestamp": "2026-01-18T18:10:26+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "TodoWrite",
+        "timestamp": "2026-01-18T18:10:43+00:00",
+        "result_preview": ""
+      },
+      {
+        "task_id": "2",
+        "tool": "Bash",
+        "timestamp": "2026-01-18T18:10:44+00:00",
+        "result_preview": ""
+      }
+    ]
+  }
+}
