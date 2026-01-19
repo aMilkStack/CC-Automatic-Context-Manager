@@ -11,3 +11,4 @@ Thumbs.db
 # Local settings (not part of plugin)
 .claude/settings.local.json
 .claude/hookify.*.local.md
+.claude/
